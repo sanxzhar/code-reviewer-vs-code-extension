@@ -1,23 +1,28 @@
-import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
-require('dotenv').config();
+import { model } from './config';
+import StyleChecker from "./style-checker";
 
-async function LogicalDivider(code: any){
-    console.log(process)
-    console.log(process.env.OPENAI_API_KEY)
+function FileContentDivider(fileName:string, res:any){
+    let fileNameArray: any = fileName
+    fileNameArray = res.split("new part")
 
-    const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY , temperature: 0 });
-
-    const template = "divide following inputs into logical parts and number them: \n{code}";
-    const prompt = new PromptTemplate({
-    template: template,
-    inputVariables: ["code"],
-    });
+    StyleChecker(fileNameArray)
+}
 
 
-    const formatprompt = await prompt.format({code: `${code}`})
-    const res = await model.call(formatprompt);
-    console.log(res)   
+async function LogicalDivider(fileName: string, fileContent: any){
+
+    const template = "Divide following code into functions according to programming language features by placing 'new part' phrase between them: {fileContent}. Do not place 'new part' phrase before first particle. \n If there is no code, just responce: {fileName} is clear."
+    
+    const propmt = new PromptTemplate({
+        template: template,
+        inputVariables: ["fileContent", "fileName"]
+    })
+    
+    const formatprompt = await propmt.format({fileContent: `${fileContent}`, fileName: `${fileName}`})
+    const res = await model.call(formatprompt)
+
+    FileContentDivider(fileName, res)
 }
 
 export default LogicalDivider;

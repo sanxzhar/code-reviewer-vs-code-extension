@@ -3,6 +3,10 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import LogicalDivider from './logical-devider';
 
+function splitToFiles(fileName: string, fileContent: any) {
+	LogicalDivider(fileName, fileContent)
+}
+
 function copyAllFilesContent(folderPath: string) {
 	fs.readdir(folderPath, (err, files) => {
 		if (err) {
@@ -17,7 +21,8 @@ function copyAllFilesContent(folderPath: string) {
 					console.error(err);
 					return;
 				}
-					LogicalDivider(data)
+				
+					splitToFiles(file, data)
 			});
 		});
 	});
