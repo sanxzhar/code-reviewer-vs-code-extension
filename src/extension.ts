@@ -8,11 +8,11 @@ function splitToFiles(fileName: string, fileContent: any) {
 }
 
 function copyAllFilesContent(folderPath: string) {
-	fs.readdir(folderPath, (err, files) => {
-		if (err) {
-			console.error(err);
-			return;
-		}
+		fs.readdir(folderPath, (err, files) => {
+			if (err) {
+				console.error(err);
+				return;
+			}
 
 		files.forEach((file) => {
 			const filePath = `${folderPath}/${file}`;
@@ -21,7 +21,6 @@ function copyAllFilesContent(folderPath: string) {
 					console.error(err);
 					return;
 				}
-				
 					splitToFiles(file, data)
 			});
 		});
