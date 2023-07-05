@@ -1,10 +1,9 @@
 
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import LogicalDivider from './logical-devider';
 
 function splitToFiles(fileName: string, fileContent: any) {
-	LogicalDivider(fileName, fileContent)
+	console.log(fileName, fileContent)
 }
 
 function copyAllFilesContent(folderPath: string) {
